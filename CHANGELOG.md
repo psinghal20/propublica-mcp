@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Updated Python requirement from 3.9 to 3.10+ to resolve fastmcp dependency issue for Glama.ai deployment
+- Added glama.json configuration file for Glama.ai server verification
+
 ## [1.1.0] - 2025-07-14
 
 ### Added
