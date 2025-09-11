@@ -11,6 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Python requirement from 3.9 to 3.10+ to resolve fastmcp dependency issue for Glama.ai deployment
 - Added glama.json configuration file for Glama.ai server verification
 
+### Changed
+- Updated all dependencies to latest versions:
+  - fastmcp: 0.9.0 → 2.12.2
+  - pydantic: 2.0.0 → 2.11.7
+  - httpx: 0.24.0 → 0.28.1
+  - python-dotenv: 1.0.0 → 1.1.1
+  - aiofiles: 23.0.0 → 24.1.0
+  - structlog: 23.0.0 → 25.4.0
+  - starlette: 0.27.0 → 0.47.3
+  - uvicorn: 0.23.0 → 0.35.0
+  - pytest: 7.0.0 → 8.4.2
+  - pytest-asyncio: 0.21.0 → 1.1.0
+  - pytest-httpx: 0.21.0 → 0.35.0
+  - black: 23.0.0 → 25.1.0
+  - flake8: 6.0.0 → 7.3.0
+  - isort: 5.12.0 → 6.0.1
+  - pre-commit: 3.0.0 → 4.3.0
+
 ## [1.1.0] - 2025-07-14
 
 ### Added
