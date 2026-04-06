@@ -425,7 +425,16 @@ async def search_similar_nonprofits(
             state=search_params.get("state"),
             ntee_category=ntee_category
         )
-        
+
+        # Fall back to search without NTEE filter if no results
+        if not results.organizations and ntee_category:
+            results = await api_client.search_organizations(
+                query=search_query,
+                limit=limit + 5,
+                state=search_params.get("state"),
+                ntee_category=None
+            )
+
         # Filter out the reference organization and apply revenue filters
         similar_orgs = []
         for org in results.organizations:
