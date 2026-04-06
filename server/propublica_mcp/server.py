@@ -392,13 +392,25 @@ async def search_similar_nonprofits(
         # Build search criteria based on reference organization
         search_params = {}
         
-        # Extract NTEE category number from the NTEE code (e.g., "A01" -> 1)
+        # Extract NTEE major group number from the NTEE code letter prefix.
+        # The ProPublica API uses 10 major groups (1-10) that map from NTEE
+        # letter codes. Multiple letters map to each group.
+        NTEE_LETTER_TO_CATEGORY = {
+            'A': 1, 'B': 1,  # Arts, Culture & Humanities
+            'C': 2, 'D': 2,  # Education
+            'E': 3,  # Environment and Animals
+            'F': 4, 'G': 4, 'H': 4,  # Health
+            'I': 5, 'J': 5, 'K': 5, 'L': 5, 'M': 5, 'N': 5, 'O': 5, 'P': 5,  # Human Services
+            'Q': 6,  # International, Foreign Affairs
+            'R': 7, 'S': 7, 'T': 7, 'U': 7, 'V': 7, 'W': 7,  # Public, Societal Benefit
+            'X': 8,  # Religion Related
+            'Y': 9,  # Mutual/Membership Benefit
+            'Z': 10,  # Unknown, Unclassified
+        }
         ntee_category = None
         if same_ntee and reference_org.ntee_code:
-            # NTEE codes start with a letter indicating the category
-            # Map letters to numbers: A=1, B=2, etc.
             ntee_letter = reference_org.ntee_code[0].upper()
-            ntee_category = ord(ntee_letter) - ord('A') + 1 if ntee_letter.isalpha() else None
+            ntee_category = NTEE_LETTER_TO_CATEGORY.get(ntee_letter)
         
         if reference_org.state:
             search_params["state"] = reference_org.state
