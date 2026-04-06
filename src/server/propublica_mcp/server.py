@@ -32,7 +32,7 @@ import io
 from mcp.server.fastmcp import FastMCP
 import mcp.types as types
 
-from .api_client import ProPublicaClient
+from .api_client import ProPublicaClient, ProPublicaAPIError
 from .models import (
     NonprofitOrganization,
     Filing,
@@ -421,15 +421,18 @@ async def search_similar_nonprofits(
         # Use organization type/category as search term if available
         search_query = reference_org.ntee_code or "nonprofit"
         
-        results = await api_client.search_organizations(
-            query=search_query,
-            limit=limit + 5,  # Get a few extra to filter out the reference org
-            state=search_params.get("state"),
-            ntee_category=ntee_category
-        )
+        try:
+            results = await api_client.search_organizations(
+                query=search_query,
+                limit=limit + 5,  # Get a few extra to filter out the reference org
+                state=search_params.get("state"),
+                ntee_category=ntee_category
+            )
+        except ProPublicaAPIError:
+            results = None
 
-        # Fall back to search without NTEE filter if no results
-        if not results.organizations and ntee_category:
+        # Fall back to search without NTEE filter if no results or 404 error
+        if ntee_category and (results is None or not results.organizations):
             results = await api_client.search_organizations(
                 query=search_query,
                 limit=limit + 5,
