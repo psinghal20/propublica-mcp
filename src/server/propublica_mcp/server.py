@@ -419,7 +419,7 @@ async def search_similar_nonprofits(
         
         # Search for similar organizations
         # Use organization type/category as search term if available
-        search_query = reference_org.ntee_code or "nonprofit"
+        search_query = reference_org.name or "nonprofit"
         
         try:
             results = await api_client.search_organizations(
